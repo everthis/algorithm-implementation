@@ -56,6 +56,9 @@ function search(text, pattern) {
 
 ## Binary Indexed Tree(BIT)
 
+<details>
+  <summary>Binary Indexed Tree implementation</summary>
+
 ```js
 const lowBit = x => x & (-x)
 class FenwickTree {
@@ -81,11 +84,16 @@ class FenwickTree {
   }
 }
 ```
+</details>
+
 
 [LeetCode-307.Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable/)
 
 ## Union-Find(Disjoint Set)
 
+<details>
+  <summary>Union-Find implementation</summary>
+  
 ```js
 class UnionFind {
   constructor(n) {
@@ -107,3 +115,5 @@ class UnionFind {
   }
 }
 ```
+</details>
+
