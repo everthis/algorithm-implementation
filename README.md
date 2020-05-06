@@ -102,9 +102,20 @@ class UnionFind {
       .map((e, i) => i + 1)
     this.ranks = Array(n).fill(0)
   }
+  root(x) {
+    while(x !== this.parents[x]) {
+      this.parents[x] = this.parents[this.parents[x]]
+      x = this.parents[x]
+    }
+    return x
+  }
   find(x) {
-    if (x !== this.parents[x]) this.parents[x] = this.find(this.parents[x])
-    return this.parents[x]
+    // if (x !== this.parents[x]) this.parents[x] = this.find(this.parents[x])
+    // return this.parents[x]
+    return this.root(x)
+  }
+  check(x, y) {
+    return this.root(x) === this.root(y)
   }
   union(x, y) {
     const [rx, ry] = [this.find(x), this.find(y)]
