@@ -3,6 +3,9 @@ Algorithm Implementation.
 
 ## Knuth–Morris–Pratt algorithm(KMP algorithm)
 
+<details>
+  <summary>Knuth–Morris–Pratt algorithm implementation</summary>
+
 ```js
 function DFA(s) {
   let i = 1
@@ -50,6 +53,8 @@ function search(text, pattern) {
   return matches
 }
 ```
+
+</details>
 
 [LeetCode-1392.Longest Happy Prefix](https://leetcode.com/problems/longest-happy-prefix/)
 
@@ -208,5 +213,52 @@ const top = 0
 const parent = (i) => ((i + 1) >>> 1) - 1
 const left = (i) => (i << 1) + 1
 const right = (i) => (i + 1) << 1
+```
+</details>
+
+## Quicksort
+<details>
+  <summary>Quicksort implementation</summary>
+  
+```js
+function Quicksort(arr, start, end) {
+  if (start >= end) return
+  const p = partition(arr, start, end)
+  qs(arr, start, p)
+  qs(arr, p + 1, end)
+}
+
+function swap(arr, i, j) {
+  const tmp = arr[i]
+  arr[i] = arr[j]
+  arr[j] = tmp
+}
+
+function compare(a, b) {
+  return a - b
+}
+
+function partition(arr, start, end) {
+  const pivot = arr[start]
+  let s = start
+  let e = end
+  while (true) {
+    while (arr[s] < pivot) {
+      s++
+    }
+    while (pivot < arr[e]) {
+      e--
+    }
+    if (s === e) {
+      return s
+    } else if (s > e) {
+      return s - 1
+    }
+    swap(arr, s, e)
+    s++
+    e--
+  }
+}
+
 ```
 </details>
