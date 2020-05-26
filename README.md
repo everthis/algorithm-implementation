@@ -145,74 +145,71 @@ class UnionFind {
 ```js
 class PriorityQueue {
   constructor(comparator = (a, b) => a > b) {
-    this._heap = []
-    this._comparator = comparator
+    this.heap = []
+    this.top = 0
+    this.comparator = comparator
   }
   size() {
-    return this._heap.length
+    return this.heap.length
   }
   isEmpty() {
     return this.size() === 0
   }
   peek() {
-    return this._heap[top]
+    return this.heap[this.top]
   }
   push(...values) {
     values.forEach((value) => {
-      this._heap.push(value)
-      this._siftUp()
+      this.heap.push(value)
+      this.siftUp()
     })
     return this.size()
   }
   pop() {
     const poppedValue = this.peek()
     const bottom = this.size() - 1
-    if (bottom > top) {
-      this._swap(top, bottom)
+    if (bottom > this.top) {
+      this.swap(this.top, bottom)
     }
-    this._heap.pop()
-    this._siftDown()
+    this.heap.pop()
+    this.siftDown()
     return poppedValue
   }
   replace(value) {
     const replacedValue = this.peek()
-    this._heap[top] = value
-    this._siftDown()
+    this.heap[this.top] = value
+    this.siftDown()
     return replacedValue
   }
-  _greater(i, j) {
-    return this._comparator(this._heap[i], this._heap[j])
-  }
-  _swap(i, j) {
-    ;[this._heap[i], this._heap[j]] = [this._heap[j], this._heap[i]]
-  }
-  _siftUp() {
+
+  parent = (i) => ((i + 1) >>> 1) - 1
+  left = (i) => (i << 1) + 1
+  right = (i) => (i + 1) << 1
+  greater = (i, j) => this.comparator(this.heap[i], this.heap[j])
+  swap = (i, j) => ([this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]])
+  siftUp = () => {
     let node = this.size() - 1
-    while (node > top && this._greater(node, parent(node))) {
-      this._swap(node, parent(node))
-      node = parent(node)
+    while (node > this.top && this.greater(node, this.parent(node))) {
+      this.swap(node, this.parent(node))
+      node = this.parent(node)
     }
   }
-  _siftDown() {
-    let node = top
+  siftDown = () => {
+    let node = this.top
     while (
-      (left(node) < this.size() && this._greater(left(node), node)) ||
-      (right(node) < this.size() && this._greater(right(node), node))
+      (this.left(node) < this.size() && this.greater(this.left(node), node)) ||
+      (this.right(node) < this.size() && this.greater(this.right(node), node))
     ) {
       let maxChild =
-        right(node) < this.size() && this._greater(right(node), left(node))
-          ? right(node)
-          : left(node)
-      this._swap(node, maxChild)
+        this.right(node) < this.size() &&
+        this.greater(this.right(node), this.left(node))
+          ? this.right(node)
+          : this.left(node)
+      this.swap(node, maxChild)
       node = maxChild
     }
   }
 }
-
-const top = 0
-const parent = (i) => ((i + 1) >>> 1) - 1
-const left = (i) => (i << 1) + 1
-const right = (i) => (i + 1) << 1
 ```
 </details>
 
