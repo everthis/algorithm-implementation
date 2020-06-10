@@ -383,7 +383,7 @@ function mergeSort(arr, l, r) {
 ```
 </details>
 
-## Binary Search
+## BinarySearch
 
 <details>
   <summary>BinarySearch implementation</summary>
@@ -405,6 +405,16 @@ const BinarySearch = function(nums, target) {
   }
   return l
 };
+
+/**
+
+Why return low rather than high?
+
+The last iteration is lo == hi == mid
+When target > nums[mid] == nums[lo] == nums[hi], after loop lo = lo + 1 == high +1 which will be the correct index for insertion
+When target < nums[mid] == nums[lo] == nums[hi], after loop hi = hi - 1 == low - 1 is not the correct index, should be low
+
+*/
 ```
 
 </details>
