@@ -1,0 +1,23 @@
+{
+  "name": "algorithm-implementation",
+  "version": "1.0.0",
+  "description": "Algorithm Implementation.",
+  "main": "BIT.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/everthis/algorithm-implementation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/everthis/algorithm-implementation/issues"
+  },
+  "homepage": "https://github.com/everthis/algorithm-implementation#readme",
+  "devDependencies": {
+    "mocha": "^8.0.1"
+  }
+}

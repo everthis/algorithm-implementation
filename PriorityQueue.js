@@ -56,8 +56,7 @@ class PriorityQueue {
       (this.right(node) < this.size() && this.greater(this.right(node), node))
     ) {
       let maxChild =
-        this.right(node) < this.size() &&
-        this.greater(this.right(node), this.left(node))
+        this.right(node) < this.size() && this.greater(this.right(node), this.left(node))
           ? this.right(node)
           : this.left(node)
       this.swap(node, maxChild)
@@ -65,3 +64,5 @@ class PriorityQueue {
     }
   }
 }
+
+module.exports = PriorityQueue
