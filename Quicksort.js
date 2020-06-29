@@ -36,3 +36,5 @@ function partition(arr, start, end) {
     e--
   }
 }
+
+module.exports = qs
