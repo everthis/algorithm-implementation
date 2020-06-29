@@ -1,5 +1,8 @@
 # Algorithm Implementation
+
 Algorithm Implementation.
+
+[![HitCount](http://hits.dwyl.com/everthis/algorithm-implementation.svg)](http://hits.dwyl.com/everthis/algorithm-implementation)
 
 ## Knuth–Morris–Pratt algorithm(KMP algorithm)
 
@@ -58,30 +61,29 @@ function search(text, pattern) {
 
 [LeetCode-1392.Longest Happy Prefix](https://leetcode.com/problems/longest-happy-prefix/)
 
-
 ## Binary Indexed Tree(BIT)
 
 <details>
   <summary>Binary Indexed Tree implementation</summary>
 
 ```js
-const lowBit = x => x & (-x)
+const lowBit = (x) => x & -x
 class FenwickTree {
   constructor(n) {
-    if(n < 1) return
+    if (n < 1) return
     this.sum = Array(n + 1).fill(0)
   }
   update(i, delta) {
-    if(i < 1) return
-    while(i < this.sum.length) {
+    if (i < 1) return
+    while (i < this.sum.length) {
       this.sum[i] += delta
-      i += lowBit(i) 
+      i += lowBit(i)
     }
   }
   query(i) {
-    if(i < 1) return
+    if (i < 1) return
     let sum = 0
-    while(i > 0) {
+    while (i > 0) {
       sum += this.sum[i]
       i -= lowBit(i)
     }
@@ -89,8 +91,8 @@ class FenwickTree {
   }
 }
 ```
-</details>
 
+</details>
 
 [LeetCode-307.Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable/)
 
@@ -134,7 +136,7 @@ class UnionFind {
   }
 }
 
-```
+````
 </details>
 
 ## PriorityQueue
@@ -210,10 +212,12 @@ class PriorityQueue {
     }
   }
 }
-```
+````
+
 </details>
 
 ## Quicksort
+
 <details>
   <summary>Quicksort implementation</summary>
   
@@ -226,38 +230,38 @@ function Quicksort(arr, start, end) {
 }
 
 function swap(arr, i, j) {
-  const tmp = arr[i]
-  arr[i] = arr[j]
-  arr[j] = tmp
+const tmp = arr[i]
+arr[i] = arr[j]
+arr[j] = tmp
 }
 
 function compare(a, b) {
-  return a - b
+return a - b
 }
 
 function partition(arr, start, end) {
-  const pivot = arr[start]
-  let s = start
-  let e = end
-  while (true) {
-    while (arr[s] < pivot) {
-      s++
-    }
-    while (pivot < arr[e]) {
-      e--
-    }
-    if (s === e) {
-      return s
-    } else if (s > e) {
-      return s - 1
-    }
-    swap(arr, s, e)
-    s++
-    e--
-  }
+const pivot = arr[start]
+let s = start
+let e = end
+while (true) {
+while (arr[s] < pivot) {
+s++
+}
+while (pivot < arr[e]) {
+e--
+}
+if (s === e) {
+return s
+} else if (s > e) {
+return s - 1
+}
+swap(arr, s, e)
+s++
+e--
+}
 }
 
-```
+````
 </details>
 
 
@@ -308,10 +312,9 @@ function select(array, k, compare) {
   }
 }
 
-```
+````
 
 </details>
-
 
 ## Mergesort
 
@@ -381,6 +384,7 @@ function mergeSort(arr, l, r) {
   }
 }
 ```
+
 </details>
 
 ## BinarySearch
@@ -406,7 +410,7 @@ const BinarySearch = function(nums, target) {
   return l
 };
 
-/**
+/\*\*
 
 Why return low rather than high?
 
@@ -414,7 +418,9 @@ The last iteration is lo == hi == mid
 When target > nums[mid] == nums[lo] == nums[hi], after loop lo = lo + 1 == high +1 which will be the correct index for insertion
 When target < nums[mid] == nums[lo] == nums[hi], after loop hi = hi - 1 == low - 1 is not the correct index, should be low
 
-*/
+\*/
+
 ```
 
 </details>
+```
