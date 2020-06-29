@@ -1,4 +1,7 @@
 dist: bionic
+language: node_js
+node_js:
+  - lts/*
 before_install:
   - pip install --user codecov
 after_success:
