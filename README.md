@@ -3,7 +3,6 @@
 Algorithm Implementation.
 
 [![HitCount](http://hits.dwyl.com/everthis/algorithm-implementation.svg)](http://hits.dwyl.com/everthis/algorithm-implementation)
-
 [![codecov](https://codecov.io/gh/everthis/algorithm-implementation/branch/master/graph/badge.svg)](https://codecov.io/gh/everthis/algorithm-implementation)
 
 ## Knuth–Morris–Pratt algorithm(KMP algorithm)
