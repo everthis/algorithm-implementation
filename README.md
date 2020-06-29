@@ -423,4 +423,3 @@ When target < nums[mid] == nums[lo] == nums[hi], after loop hi = hi - 1 == low -
 ```
 
 </details>
-```
