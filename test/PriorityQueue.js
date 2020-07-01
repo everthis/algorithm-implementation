@@ -1,5 +1,5 @@
 const assert = require('assert')
-const PQ = require('../PriorityQueue')
+const PQ = require('../src/PriorityQueue')
 
 describe('PriorityQueue(Max-Heap)', function () {
   describe('#Pop()', function () {

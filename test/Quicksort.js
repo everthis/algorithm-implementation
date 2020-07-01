@@ -1,5 +1,5 @@
 const { expect } = require('chai')
-const qs = require('../Quicksort')
+const qs = require('../src/Quicksort')
 
 describe('Quicksort', function () {
   describe('#Ascending', function () {
