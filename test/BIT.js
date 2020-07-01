@@ -1,5 +1,5 @@
 const assert = require('assert')
-const FenwickTree = require('../BIT')
+const FenwickTree = require('../src/BIT')
 
 describe('FenwickTree', function () {
   describe('Query', function () {

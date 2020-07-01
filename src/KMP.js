@@ -43,3 +43,5 @@ function search(text, pattern) {
   }
   return matches
 }
+
+module.exports = search
