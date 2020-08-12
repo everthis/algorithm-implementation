@@ -233,38 +233,39 @@ function Quicksort(arr, start, end) {
 }
 
 function swap(arr, i, j) {
-const tmp = arr[i]
-arr[i] = arr[j]
-arr[j] = tmp
+  const tmp = arr[i]
+  arr[i] = arr[j]
+  arr[j] = tmp
 }
 
 function compare(a, b) {
-return a - b
+  return a - b
 }
 
 function partition(arr, start, end) {
-const pivot = arr[start]
-let s = start
-let e = end
-while (true) {
-while (arr[s] < pivot) {
-s++
-}
-while (pivot < arr[e]) {
-e--
-}
-if (s === e) {
-return s
-} else if (s > e) {
-return s - 1
-}
-swap(arr, s, e)
-s++
-e--
-}
+  const pivot = arr[start]
+  let s = start
+  let e = end
+  while (true) {
+    while (arr[s] < pivot) {
+      s++
+    }
+    while (pivot < arr[e]) {
+      e--
+    }
+    if (s === e) {
+      return s
+    } else if (s > e) {
+      return s - 1
+    }
+    swap(arr, s, e)
+    s++
+    e--
+  }
 }
 
-````
+```
+
 </details>
 
 
@@ -315,7 +316,7 @@ function select(array, k, compare) {
   }
 }
 
-````
+```
 
 </details>
 
