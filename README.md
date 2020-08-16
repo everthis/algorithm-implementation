@@ -108,7 +108,8 @@ class FenwickTree {
 ```js
 class SegmentTree {
   constructor(max) {
-    this.nodes = new Array(4 * max).fill(0)
+    const x = Math.ceil(Math.log2(max))
+    this.nodes = new Array(2*(Math.pow(2, x)) - 1).fill(0)
     this.n = max
   }
   add(num) {
