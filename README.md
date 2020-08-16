@@ -99,6 +99,54 @@ class FenwickTree {
 
 [LeetCode-307.Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable/)
 
+
+## Segment Tree
+
+<details>
+  <summary>Segment Tree</summary>
+  
+```js
+class SegmentTree {
+  constructor(max) {
+    this.nodes = new Array(4 * max)
+    this.n = max
+  }
+  add(num) {
+    this.addUtil(num, 0, n, 0)
+  }
+  addUtil(num, l, r, node) {
+    if (num < l || num > r) {
+      return
+    }
+    if (l === r) {
+      nodes[node]++
+      return
+    }
+    const mid = ((l + r) / 2) >> 0
+    addUtil(num, l, mid, 2 * node + 1)
+    addUtil(num, mid + 1, r, 2 * node + 2)
+    nodes[node] = nodes[2 * node + 1] + nodes[2 * node + 2]
+  }
+  // tells count of numbers < num.
+  getCountLessThan(num) {
+    return getUtil(0, num, 0, n, 0)
+  }
+  getUtil(ql, qr, l, r, node) {
+    if (qr < l || ql > r) return 0
+    if (ql <= l && qr >= r) {
+      return nodes[node]
+    }
+    const mid = ((l + r) / 2) >> 0
+    return (
+      getUtil(ql, qr, l, mid, 2 * node + 1) +
+      getUtil(ql, qr, mid + 1, r, 2 * node + 2)
+    )
+  }
+}
+```
+
+</details>
+
 ## Union-Find(Disjoint Set)
 
 <details>
