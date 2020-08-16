@@ -114,12 +114,9 @@ class SegmentTree {
     // Allocate memory for segment tree
     //Height of segment tree
     const x = Math.ceil(Math.log(n) / Math.log(2))
-
     //Maximum size of segment tree
     const max_size = 2 * Math.pow(2, x) - 1
-
     this.st = new Array(max_size) // Memory allocation
-
     this.constructSTUtil(arr, 0, n - 1, 0)
   }
 
@@ -141,10 +138,8 @@ class SegmentTree {
     // If segment of this node is a part of given range, then return
     // the sum of the segment
     if (qs <= ss && qe >= se) return this.st[si]
-
     // If segment of this node is outside the given range
     if (se < qs || ss > qe) return 0
-
     // If a part of this segment overlaps with the given range
     const mid = this.getMid(ss, se)
     return (
@@ -163,7 +158,6 @@ class SegmentTree {
     // Base Case: If the input index lies outside the range of
     // this segment
     if (i < ss || i > se) return
-
     // If the input index is in range of this node, then update the
     // value of the node and its children
     this.st[si] = this.st[si] + diff
@@ -181,13 +175,10 @@ class SegmentTree {
     if (i < 0 || i > n - 1) {
       return
     }
-
     // Get the difference between new value and old value
     const diff = new_val - arr[i]
-
     // Update the value in array
     arr[i] = new_val
-
     // Update the values of nodes in segment tree
     this.updateValueUtil(0, n - 1, i, diff, 0)
   }
@@ -211,7 +202,6 @@ class SegmentTree {
       this.st[si] = arr[ss]
       return arr[ss]
     }
-
     // If there are more than one elements, then recur for left and
     // right subtrees and store the sum of values in this node
     const mid = this.getMid(ss, se)
