@@ -554,3 +554,18 @@ When target < nums[mid] == nums[lo] == nums[hi], after loop hi = hi - 1 == low -
 ```
 
 </details>
+
+## Greatest common divisor
+
+<details>
+  <summary>Greatest common divisor implementation</summary>
+
+```js
+function GCD(a, b) {
+  if (a === 0) return b
+  if (b === 0) return a
+  return GCD(Math.abs(a - b), Math.min(a, b))
+}
+```
+  
+</details>
