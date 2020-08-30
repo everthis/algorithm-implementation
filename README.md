@@ -579,6 +579,7 @@ function GCD(a, b) {
 function manachersAlgorithm(s, N) {
   let str = getModifiedString(s, N)
   let len = 2 * N + 1
+  // expansion length
   const P = new Array(len).fill(0)
   // stores the center of the longest palindromic substring until now
   let c = 0
