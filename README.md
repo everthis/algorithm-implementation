@@ -555,7 +555,7 @@ When target < nums[mid] == nums[lo] == nums[hi], after loop hi = hi - 1 == low -
 
 </details>
 
-## Greatest common divisor
+## Greatest Common Divisor
 
 <details>
   <summary>Greatest common divisor implementation</summary>
@@ -577,8 +577,8 @@ function GCD(a, b) {
 
 ```js
 function manachersAlgorithm(s, N) {
-  let str = getModifiedString(s, N)
-  let len = 2 * N + 1
+  const str = getModifiedString(s, N)
+  const len = 2 * N + 1
   // expansion length
   const P = new Array(len).fill(0)
   // stores the center of the longest palindromic substring until now
@@ -588,7 +588,7 @@ function manachersAlgorithm(s, N) {
   let maxLen = 0
   for (let i = 0; i < len; i++) {
     //get mirror index of i
-    let mirror = 2 * c - i
+    const mirror = 2 * c - i
     // see if the mirror of i is expanding beyond the left boundary
     // of current longest palindrome at center c
     // if it is, then take r - i as P[i]
@@ -610,7 +610,6 @@ function manachersAlgorithm(s, N) {
     if (i + P[i] > r) {
       c = i
       r = i + P[i]
-
       if (P[i] > maxLen) {
         maxLen = P[i]
       }
