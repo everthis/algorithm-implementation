@@ -566,6 +566,23 @@ function GCD(a, b) {
   if (b === 0) return a
   return GCD(Math.abs(a - b), Math.min(a, b))
 }
+
+// or
+
+function gcd(a, b) {
+  return b ? gcd(b, a % b) : a
+}
+
+// or
+
+function gcd(a, b) {
+  while (b) {
+    a %= b
+    b = [a, (a = b)][0]
+  }
+  return a
+}
+
 ```
   
 </details>
