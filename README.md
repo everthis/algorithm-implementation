@@ -584,7 +584,20 @@ function gcd(a, b) {
 }
 
 ```
-  
+
+</details>
+
+## Least Common Multiple
+
+<details>
+  <summary>Least Common Multiple implementation</summary>
+
+```js
+function lcm(a, b) {
+  return a / gcd(a, b) * b;
+}
+
+```
 </details>
 
 ## Manacher's Algorithm
