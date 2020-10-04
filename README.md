@@ -660,3 +660,44 @@ function getModifiedString(s, N) {
 ```
   
 </details>
+
+## Gray code
+
+<details>
+  <summary>Gray code implementation</summary>
+
+```js
+function BinaryToGray(num) {
+  // The operator >> is shift right. The operator ^ is exclusive or.
+  return num ^ (num >> 1);
+}
+
+// This function converts a reflected binary Gray code number to a binary number.
+function GrayToBinary(num) {
+  let mask = num;
+  // Each Gray code bit is exclusive-ored with all more significant bits.
+  while (mask) {
+    mask >>= 1;
+    num   ^= mask;
+  }
+  return num;
+}
+
+// A more efficient version for Gray codes 32 bits or fewer
+// through the use of SWAR (SIMD within a register) techniques. 
+// It implements a parallel prefix XOR function. The assignment
+// statements can be in any order.
+// 
+// This function can be adapted for longer Gray codes by adding steps. 
+
+function GrayToBinary32(num) {
+  num ^= num >> 16;
+  num ^= num >>  8;
+  num ^= num >>  4;
+  num ^= num >>  2;
+  num ^= num >>  1;
+  return num;
+}
+```
+
+</details>
