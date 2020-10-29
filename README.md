@@ -701,3 +701,126 @@ function GrayToBinary32(num) {
 ```
 
 </details>
+
+
+## Trie
+
+<details>
+  <summary>Trie implementation</summary>
+
+```js
+class TrieNode {
+  constructor(v, isComplete = false) {
+    this.val = v;
+    this.isComplete = isComplete;
+    this.children = new Map();
+  }
+}
+class Trie {
+  constructor() {
+    this.head = new TrieNode(null);
+  }
+
+  /**
+   * @param {string} word
+   * @return {Trie}
+   */
+  addWord(word) {
+    const characters = Array.from(word);
+    let currentNode = this.head;
+    for (let charIndex = 0; charIndex < characters.length; charIndex++) {
+      const isComplete = charIndex === characters.length - 1;
+      const char = characters[charIndex];
+      if (currentNode.children.has(char)) {
+        currentNode = currentNode.children.get(char);
+      } else {
+        const child = new TrieNode(char, isComplete);
+        currentNode.children.set(char, child);
+        currentNode = child;
+      }
+    }
+    return this;
+  }
+
+  /**
+   * @param {string} word
+   * @return {Trie}
+   */
+  deleteWord(word) {
+    const depthFirstDelete = (currentNode, charIndex = 0) => {
+      if (charIndex >= word.length) {
+        return;
+      }
+      const character = word[charIndex];
+      const nextNode = currentNode.children.get(character);
+      if (nextNode == null) {
+        return;
+      }
+      depthFirstDelete(nextNode, charIndex + 1);
+      if (charIndex === word.length - 1) {
+        nextNode.isComplete = false;
+      }
+      // childNode is deleted only if:
+      // - childNode has NO children
+      // - childNode.isComplete === false
+      if (nextNode.children.size === 0) {
+        currentNode.children.delete(character);
+      }
+    };
+    depthFirstDelete(this.head);
+    return this;
+  }
+
+  /**
+   * @param {string} word
+   * @return {string[]}
+   */
+  suggestNextCharacters(word) {
+    const lastCharacter = this.getLastCharacterNode(word);
+    if (!lastCharacter) {
+      return null;
+    }
+    return this.suggestChildren(lastCharacter);
+  }
+
+  /**
+   * @param {TrieNode} node
+   * @return {TrieNode}
+   */
+  suggestChildren(node) {
+    if (node == null) return [];
+    return [...node.children.keys()];
+  }
+
+  /**
+   * Check if complete word exists in Trie.
+   *
+   * @param {string} word
+   * @return {boolean}
+   */
+  doesWordExist(word) {
+    const lastCharacter = this.getLastCharacterNode(word);
+    return !!lastCharacter && lastCharacter.isComplete;
+  }
+
+  /**
+   * @param {string} word
+   * @return {TrieNode}
+   */
+  getLastCharacterNode(word) {
+    const characters = Array.from(word);
+    let currentNode = this.head;
+    for (let charIndex = 0; charIndex < characters.length; charIndex++) {
+      const char = characters[charIndex];
+      if (!currentNode.children.has(char)) {
+        return null;
+      }
+      currentNode = currentNode.children.get(char);
+    }
+    return currentNode;
+  }
+}
+
+```
+
+</details>
