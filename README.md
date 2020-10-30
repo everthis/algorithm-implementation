@@ -946,3 +946,47 @@ class BloomFilter {
 
 
 </details>
+
+## Inverse element
+
+<details>
+  <summary>Inverse element implementation</summary>
+
+```js
+function inverseElement(a, n) {
+  let N = n
+  if (GCD(a, n) == 1) {
+    let p = 1,
+      q = 0,
+      r = 0,
+      s = 1
+    let c, quot, new_r, new_s
+    while (n !== 0) {
+      c = modulo(a, n)
+      quot = Math.floor(a / n)
+      a = n
+      n = c
+      new_r = p - quot * r
+      new_s = q - quot * s
+      p = r
+      q = s
+      r = new_r
+      s = new_s
+    }
+    return modulo(p, N)
+  } else {
+    return null
+  }
+}
+
+function modulo(a, n) {
+  if (a >= 0) {
+    return a % n
+  } else {
+    return (a % n) + n
+  }
+}
+
+```
+
+</details>
