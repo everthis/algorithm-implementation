@@ -1077,3 +1077,45 @@ function isPowerOfTwoBitwise(number) {
 
 </details>
 
+## Integer partition
+
+<details>
+  <summary>Integer partition implementation</summary>
+
+```js
+function integerPartition(number) {
+  const partitionMatrix = Array(number + 1)
+    .fill(null)
+    .map(() => {
+      return Array(number + 1).fill(null)
+    })
+  for (let numberIndex = 1; numberIndex <= number; numberIndex++) {
+    partitionMatrix[0][numberIndex] = 0
+  }
+  for (let summandIndex = 0; summandIndex <= number; summandIndex++) {
+    partitionMatrix[summandIndex][0] = 1
+  }
+  for (let summandIndex = 1; summandIndex <= number; summandIndex++) {
+    for (let numberIndex = 1; numberIndex <= number; numberIndex++) {
+      if (summandIndex > numberIndex) {
+        partitionMatrix[summandIndex][numberIndex] =
+          partitionMatrix[summandIndex - 1][numberIndex]
+      } else {
+        const combosWithoutSummand =
+          partitionMatrix[summandIndex - 1][numberIndex]
+        const combosWithSummand =
+          partitionMatrix[summandIndex][numberIndex - summandIndex]
+
+        partitionMatrix[summandIndex][numberIndex] =
+          combosWithoutSummand + combosWithSummand
+      }
+    }
+  }
+  return partitionMatrix[number][number]
+}
+
+```
+
+</details>
+
+
