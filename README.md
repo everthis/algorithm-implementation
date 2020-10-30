@@ -1062,3 +1062,18 @@ function squareRoot(number, tolerance = 0.0001) {
 ```
 </details>
   
+
+## Is power of two
+
+<details>
+  <summary>Is power of two implementation</summary>
+
+```js
+function isPowerOfTwoBitwise(number) {
+  if (number < 1) return false
+  return (number & (number - 1)) === 0;
+}
+```
+
+</details>
+
