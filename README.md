@@ -1184,4 +1184,27 @@ function bellNumber(n) {
 
 </details>
 
+## Partition a set into k subsets
 
+<details>
+  <summary>Partition a set into k subsets implementation</summary>
+
+```js
+// Returns count of different partitions of n
+// elements in k subsets
+function countP(n, k) {
+  const dp = Array.from({ length: n + 1 }, () => Array(k + 1).fill(0))
+  // Base cases
+  for (let i = 0; i <= n; i++) dp[i][0] = 0
+  for (let i = 0; i <= k; i++) dp[0][k] = 0
+  // Bottom up
+  for (let i = 1; i <= n; i++) {
+    for (let j = 1; j <= k; j++) {
+      if (j == 1 || i == j) dp[i][j] = 1
+      else dp[i][j] = j * dp[i - 1][j] + dp[i - 1][j - 1]
+    }
+  }
+  return dp[n][k]
+}
+```
+</details>
