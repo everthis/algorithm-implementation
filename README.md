@@ -1169,6 +1169,7 @@ function comb(n, r) {
   <summary>Bell number implementation</summary>
  
 ```js
+// Bell triangle method
 function bellNumber(n) {
   const bell = Array.from({ length: n + 1 }, () => Array(n + 1).fill(0))
   bell[0][0] = 1
