@@ -1140,4 +1140,26 @@ function power(base, power) {
 </details>
 
 
+## Combinations
+
+<details>
+  <summary>Combinations implementation</summary>
+
+```js
+// combinations without repetition
+function comb(n, r) {
+  if (n < r) return 0;
+  let res = 1;
+  if (n - r < r) r = n - r;
+  for (let i = n, j = 1; i >= 1 && j <= r; --i, ++j) {
+    res = res * i;
+  }
+  for (let i = r; i >= 2; --i) {
+    res = res / i;
+  }
+  return res;
+}
+```
+
+</details>
 
