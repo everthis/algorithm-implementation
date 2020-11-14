@@ -522,6 +522,8 @@ function mergeSort(arr, l, r) {
 
 [LeetCode-327. Count of Range Sum](https://leetcode.com/problems/count-of-range-sum/)
 
+[LeetCode-493. Reverse Pairs](https://leetcode.com/problems/reverse-pairs/)
+
 ## BinarySearch
 
 <details>
