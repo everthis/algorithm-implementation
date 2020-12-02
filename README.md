@@ -1256,7 +1256,8 @@ class TreeSet {
   }
   add(element) {
     let index = this.binarySearch(element)
-    if (index < 0) index = -index - 1
+    if(index >= 0) return
+    index = -index - 1
     this.elements.splice(index, 0, element)
     this.length++
   }
