@@ -1285,3 +1285,618 @@ class TreeSet {
 }
 ```
 </details>
+
+## Red Black Tree
+
+<details>
+  <summary>Red black tree implementation</summary>
+
+```js
+class Comparator {
+  constructor(compareFunction) {
+    this.compare = compareFunction || Comparator.defaultCompareFunction
+  }
+  static defaultCompareFunction(a, b) {
+    if (a === b) {
+      return 0
+    }
+    return a < b ? -1 : 1
+  }
+  equal(a, b) {
+    return this.compare(a, b) === 0
+  }
+  lessThan(a, b) {
+    return this.compare(a, b) < 0
+  }
+  greaterThan(a, b) {
+    return this.compare(a, b) > 0
+  }
+  lessThanOrEqual(a, b) {
+    return this.lessThan(a, b) || this.equal(a, b)
+  }
+  greaterThanOrEqual(a, b) {
+    return this.greaterThan(a, b) || this.equal(a, b)
+  }
+  reverse() {
+    const compareOriginal = this.compare
+    this.compare = (a, b) => compareOriginal(b, a)
+  }
+}
+
+class LinkedListNode {
+  constructor(value, next = null) {
+    this.value = value
+    this.next = next
+  }
+  toString(callback) {
+    return callback ? callback(this.value) : `${this.value}`
+  }
+}
+
+class LinkedList {
+  constructor(comparatorFunction) {
+    this.head = null
+    this.tail = null
+    this.compare = new Comparator(comparatorFunction)
+  }
+  prepend(value) {
+    const newNode = new LinkedListNode(value, this.head)
+    this.head = newNode
+    if (!this.tail) {
+      this.tail = newNode
+    }
+    return this
+  }
+  append(value) {
+    const newNode = new LinkedListNode(value)
+    if (!this.head) {
+      this.head = newNode
+      this.tail = newNode
+      return this
+    }
+    this.tail.next = newNode
+    this.tail = newNode
+    return this
+  }
+  delete(value) {
+    if (!this.head) {
+      return null
+    }
+    let deletedNode = null
+    while (this.head && this.compare.equal(this.head.value, value)) {
+      deletedNode = this.head
+      this.head = this.head.next
+    }
+    let currentNode = this.head
+    if (currentNode !== null) {
+      while (currentNode.next) {
+        if (this.compare.equal(currentNode.next.value, value)) {
+          deletedNode = currentNode.next
+          currentNode.next = currentNode.next.next
+        } else {
+          currentNode = currentNode.next
+        }
+      }
+    }
+    if (this.compare.equal(this.tail.value, value)) {
+      this.tail = currentNode
+    }
+    return deletedNode
+  }
+  find({ value = undefined, callback = undefined }) {
+    if (!this.head) {
+      return null
+    }
+    let currentNode = this.head
+    while (currentNode) {
+      if (callback && callback(currentNode.value)) {
+        return currentNode
+      }
+      if (value !== undefined && this.compare.equal(currentNode.value, value)) {
+        return currentNode
+      }
+      currentNode = currentNode.next
+    }
+    return null
+  }
+  deleteTail() {
+    const deletedTail = this.tail
+    if (this.head === this.tail) {
+      this.head = null
+      this.tail = null
+      return deletedTail
+    }
+    let currentNode = this.head
+    while (currentNode.next) {
+      if (!currentNode.next.next) {
+        currentNode.next = null
+      } else {
+        currentNode = currentNode.next
+      }
+    }
+    this.tail = currentNode
+    return deletedTail
+  }
+  deleteHead() {
+    if (!this.head) {
+      return null
+    }
+    const deletedHead = this.head
+    if (this.head.next) {
+      this.head = this.head.next
+    } else {
+      this.head = null
+      this.tail = null
+    }
+    return deletedHead
+  }
+  fromArray(values) {
+    values.forEach((value) => this.append(value))
+    return this
+  }
+  toArray() {
+    const nodes = []
+    let currentNode = this.head
+    while (currentNode) {
+      nodes.push(currentNode)
+      currentNode = currentNode.next
+    }
+    return nodes
+  }
+  toString(callback) {
+    return this.toArray()
+      .map((node) => node.toString(callback))
+      .toString()
+  }
+  reverse() {
+    let currNode = this.head
+    let prevNode = null
+    let nextNode = null
+    while (currNode) {
+      nextNode = currNode.next
+      currNode.next = prevNode
+      prevNode = currNode
+      currNode = nextNode
+    }
+    this.tail = this.head
+    this.head = prevNode
+    return this
+  }
+}
+
+
+const defaultHashTableSize = 32
+
+class HashTable {
+  constructor(hashTableSize = defaultHashTableSize) {
+    this.buckets = Array(hashTableSize)
+      .fill(null)
+      .map(() => new LinkedList())
+    this.keys = {}
+  }
+  hash(key) {
+    const hash = Array.from(key).reduce(
+      (hashAccumulator, keySymbol) => hashAccumulator + keySymbol.charCodeAt(0),
+      0
+    )
+    return hash % this.buckets.length
+  }
+  set(key, value) {
+    const keyHash = this.hash(key)
+    this.keys[key] = keyHash
+    const bucketLinkedList = this.buckets[keyHash]
+    const node = bucketLinkedList.find({
+      callback: (nodeValue) => nodeValue.key === key,
+    })
+    if (!node) {
+      bucketLinkedList.append({ key, value })
+    } else {
+      node.value.value = value
+    }
+  }
+  delete(key) {
+    const keyHash = this.hash(key)
+    delete this.keys[key]
+    const bucketLinkedList = this.buckets[keyHash]
+    const node = bucketLinkedList.find({
+      callback: (nodeValue) => nodeValue.key === key,
+    })
+    if (node) {
+      return bucketLinkedList.delete(node.value)
+    }
+    return null
+  }
+  get(key) {
+    const bucketLinkedList = this.buckets[this.hash(key)]
+    const node = bucketLinkedList.find({
+      callback: (nodeValue) => nodeValue.key === key,
+    })
+    return node ? node.value.value : undefined
+  }
+  has(key) {
+    return Object.hasOwnProperty.call(this.keys, key)
+  }
+  getKeys() {
+    return Object.keys(this.keys)
+  }
+}
+
+class BinaryTreeNode {
+  constructor(value = null) {
+    this.left = null
+    this.right = null
+    this.parent = null
+    this.value = value
+    this.meta = new HashTable()
+    this.nodeComparator = new Comparator()
+  }
+  get leftHeight() {
+    if (!this.left) {
+      return 0
+    }
+    return this.left.height + 1
+  }
+  get rightHeight() {
+    if (!this.right) {
+      return 0
+    }
+    return this.right.height + 1
+  }
+
+  get height() {
+    return Math.max(this.leftHeight, this.rightHeight)
+  }
+  get balanceFactor() {
+    return this.leftHeight - this.rightHeight
+  }
+  get uncle() {
+    if (!this.parent) {
+      return undefined
+    }
+    if (!this.parent.parent) {
+      return undefined
+    }
+    if (!this.parent.parent.left || !this.parent.parent.right) {
+      return undefined
+    }
+    if (this.nodeComparator.equal(this.parent, this.parent.parent.left)) {
+      return this.parent.parent.right
+    }
+    return this.parent.parent.left
+  }
+
+  setValue(value) {
+    this.value = value
+    return this
+  }
+  setLeft(node) {
+    if (this.left) {
+      this.left.parent = null
+    }
+    this.left = node
+    if (this.left) {
+      this.left.parent = this
+    }
+    return this
+  }
+
+  setRight(node) {
+    if (this.right) {
+      this.right.parent = null
+    }
+    this.right = node
+    if (node) {
+      this.right.parent = this
+    }
+    return this
+  }
+  removeChild(nodeToRemove) {
+    if (this.left && this.nodeComparator.equal(this.left, nodeToRemove)) {
+      this.left = null
+      return true
+    }
+    if (this.right && this.nodeComparator.equal(this.right, nodeToRemove)) {
+      this.right = null
+      return true
+    }
+    return false
+  }
+  replaceChild(nodeToReplace, replacementNode) {
+    if (!nodeToReplace || !replacementNode) {
+      return false
+    }
+    if (this.left && this.nodeComparator.equal(this.left, nodeToReplace)) {
+      this.left = replacementNode
+      return true
+    }
+    if (this.right && this.nodeComparator.equal(this.right, nodeToReplace)) {
+      this.right = replacementNode
+      return true
+    }
+    return false
+  }
+  static copyNode(sourceNode, targetNode) {
+    targetNode.setValue(sourceNode.value)
+    targetNode.setLeft(sourceNode.left)
+    targetNode.setRight(sourceNode.right)
+  }
+  traverseInOrder() {
+    let traverse = []
+    if (this.left) {
+      traverse = traverse.concat(this.left.traverseInOrder())
+    }
+    traverse.push(this.value)
+    if (this.right) {
+      traverse = traverse.concat(this.right.traverseInOrder())
+    }
+    return traverse
+  }
+  toString() {
+    return this.traverseInOrder().toString()
+  }
+}
+
+class BinarySearchTreeNode extends BinaryTreeNode {
+  constructor(value = null, compareFunction = undefined) {
+    super(value)
+    this.compareFunction = compareFunction
+    this.nodeValueComparator = new Comparator(compareFunction)
+  }
+  insert(value) {
+    if (this.nodeValueComparator.equal(this.value, null)) {
+      this.value = value
+      return this
+    }
+    if (this.nodeValueComparator.lessThan(value, this.value)) {
+      if (this.left) {
+        return this.left.insert(value)
+      }
+      const newNode = new BinarySearchTreeNode(value, this.compareFunction)
+      this.setLeft(newNode)
+      return newNode
+    }
+    if (this.nodeValueComparator.greaterThan(value, this.value)) {
+      if (this.right) {
+        return this.right.insert(value)
+      }
+      const newNode = new BinarySearchTreeNode(value, this.compareFunction)
+      this.setRight(newNode)
+      return newNode
+    }
+    return this
+  }
+  find(value) {
+    if (this.nodeValueComparator.equal(this.value, value)) {
+      return this
+    }
+    if (this.nodeValueComparator.lessThan(value, this.value) && this.left) {
+      return this.left.find(value)
+    }
+    if (this.nodeValueComparator.greaterThan(value, this.value) && this.right) {
+      return this.right.find(value)
+    }
+    return null
+  }
+  contains(value) {
+    return !!this.find(value)
+  }
+  remove(value) {
+    const nodeToRemove = this.find(value)
+    if (!nodeToRemove) {
+      throw new Error('Item not found in the tree')
+    }
+    const { parent } = nodeToRemove
+    if (!nodeToRemove.left && !nodeToRemove.right) {
+      if (parent) {
+        parent.removeChild(nodeToRemove)
+      } else {
+        nodeToRemove.setValue(undefined)
+      }
+    } else if (nodeToRemove.left && nodeToRemove.right) {
+      const nextBiggerNode = nodeToRemove.right.findMin()
+      if (!this.nodeComparator.equal(nextBiggerNode, nodeToRemove.right)) {
+        this.remove(nextBiggerNode.value)
+        nodeToRemove.setValue(nextBiggerNode.value)
+      } else {
+        nodeToRemove.setValue(nodeToRemove.right.value)
+        nodeToRemove.setRight(nodeToRemove.right.right)
+      }
+    } else {
+      const childNode = nodeToRemove.left || nodeToRemove.right
+      if (parent) {
+        parent.replaceChild(nodeToRemove, childNode)
+      } else {
+        BinaryTreeNode.copyNode(childNode, nodeToRemove)
+      }
+    }
+    nodeToRemove.parent = null
+    return true
+  }
+  findMin() {
+    if (!this.left) {
+      return this
+    }
+    return this.left.findMin()
+  }
+}
+
+class BinarySearchTree {
+  constructor(nodeValueCompareFunction) {
+    this.root = new BinarySearchTreeNode(null, nodeValueCompareFunction);
+    this.nodeComparator = this.root.nodeComparator;
+  }
+  insert(value) {
+    return this.root.insert(value);
+  }
+  contains(value) {
+    return this.root.contains(value);
+  }
+  remove(value) {
+    return this.root.remove(value);
+  }
+  toString() {
+    return this.root.toString();
+  }
+}
+
+const RED_BLACK_TREE_COLORS = {
+  red: 'red',
+  black: 'black',
+}
+const COLOR_PROP_NAME = 'color'
+
+class RedBlackTree extends BinarySearchTree {
+  insert(value) {
+    const insertedNode = super.insert(value)
+    if (this.nodeComparator.equal(insertedNode, this.root)) {
+      this.makeNodeBlack(insertedNode)
+    } else {
+      this.makeNodeRed(insertedNode)
+    }
+    this.balance(insertedNode)
+    return insertedNode
+  }
+  remove(value) {
+    throw new Error(
+      `Can't remove ${value}. Remove method is not implemented yet`
+    )
+  }
+  balance(node) {
+    if (this.nodeComparator.equal(node, this.root)) {
+      return
+    }
+    if (this.isNodeBlack(node.parent)) {
+      return
+    }
+    const grandParent = node.parent.parent
+    if (node.uncle && this.isNodeRed(node.uncle)) {
+      this.makeNodeBlack(node.uncle)
+      this.makeNodeBlack(node.parent)
+
+      if (!this.nodeComparator.equal(grandParent, this.root)) {
+        this.makeNodeRed(grandParent)
+      } else {
+        return
+      }
+      this.balance(grandParent)
+    } else if (!node.uncle || this.isNodeBlack(node.uncle)) {
+      if (grandParent) {
+        let newGrandParent
+        if (this.nodeComparator.equal(grandParent.left, node.parent)) {
+          if (this.nodeComparator.equal(node.parent.left, node)) {
+            newGrandParent = this.leftLeftRotation(grandParent)
+          } else {
+            newGrandParent = this.leftRightRotation(grandParent)
+          }
+        } else {
+          if (this.nodeComparator.equal(node.parent.right, node)) {
+            newGrandParent = this.rightRightRotation(grandParent)
+          } else {
+            newGrandParent = this.rightLeftRotation(grandParent)
+          }
+        }
+        if (newGrandParent && newGrandParent.parent === null) {
+          this.root = newGrandParent
+          this.makeNodeBlack(this.root)
+        }
+        this.balance(newGrandParent)
+      }
+    }
+  }
+  leftLeftRotation(grandParentNode) {
+    const grandGrandParent = grandParentNode.parent
+    let grandParentNodeIsLeft
+    if (grandGrandParent) {
+      grandParentNodeIsLeft = this.nodeComparator.equal(
+        grandGrandParent.left,
+        grandParentNode
+      )
+    }
+    const parentNode = grandParentNode.left
+    const parentRightNode = parentNode.right
+    parentNode.setRight(grandParentNode)
+    grandParentNode.setLeft(parentRightNode)
+    if (grandGrandParent) {
+      if (grandParentNodeIsLeft) {
+        grandGrandParent.setLeft(parentNode)
+      } else {
+        grandGrandParent.setRight(parentNode)
+      }
+    } else {
+      parentNode.parent = null
+    }
+    this.swapNodeColors(parentNode, grandParentNode)
+    return parentNode
+  }
+  leftRightRotation(grandParentNode) {
+    const parentNode = grandParentNode.left
+    const childNode = parentNode.right
+    const childLeftNode = childNode.left
+    childNode.setLeft(parentNode)
+    parentNode.setRight(childLeftNode)
+    grandParentNode.setLeft(childNode)
+    return this.leftLeftRotation(grandParentNode)
+  }
+  rightRightRotation(grandParentNode) {
+    const grandGrandParent = grandParentNode.parent
+    let grandParentNodeIsLeft
+    if (grandGrandParent) {
+      grandParentNodeIsLeft = this.nodeComparator.equal(
+        grandGrandParent.left,
+        grandParentNode
+      )
+    }
+    const parentNode = grandParentNode.right
+    const parentLeftNode = parentNode.left
+    parentNode.setLeft(grandParentNode)
+    grandParentNode.setRight(parentLeftNode)
+    if (grandGrandParent) {
+      if (grandParentNodeIsLeft) {
+        grandGrandParent.setLeft(parentNode)
+      } else {
+        grandGrandParent.setRight(parentNode)
+      }
+    } else {
+      parentNode.parent = null
+    }
+    this.swapNodeColors(parentNode, grandParentNode)
+    return parentNode
+  }
+  rightLeftRotation(grandParentNode) {
+    const parentNode = grandParentNode.right
+    const childNode = parentNode.left
+    const childRightNode = childNode.right
+    childNode.setRight(parentNode)
+    parentNode.setLeft(childRightNode)
+    grandParentNode.setRight(childNode)
+    return this.rightRightRotation(grandParentNode)
+  }
+  makeNodeRed(node) {
+    node.meta.set(COLOR_PROP_NAME, RED_BLACK_TREE_COLORS.red)
+    return node
+  }
+  makeNodeBlack(node) {
+    node.meta.set(COLOR_PROP_NAME, RED_BLACK_TREE_COLORS.black)
+    return node
+  }
+  isNodeRed(node) {
+    return node.meta.get(COLOR_PROP_NAME) === RED_BLACK_TREE_COLORS.red
+  }
+  isNodeBlack(node) {
+    return node.meta.get(COLOR_PROP_NAME) === RED_BLACK_TREE_COLORS.black
+  }
+  isNodeColored(node) {
+    return this.isNodeRed(node) || this.isNodeBlack(node)
+  }
+  swapNodeColors(firstNode, secondNode) {
+    const firstColor = firstNode.meta.get(COLOR_PROP_NAME)
+    const secondColor = secondNode.meta.get(COLOR_PROP_NAME)
+
+    firstNode.meta.set(COLOR_PROP_NAME, secondColor)
+    secondNode.meta.set(COLOR_PROP_NAME, firstColor)
+  }
+}
+
+```
+
+</details>
