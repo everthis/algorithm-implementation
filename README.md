@@ -56,7 +56,7 @@ const lengthOfLIS = function(nums) {
 //
 // Usage: lower_bound(array, value, [less])
 //        lower_bound(array, first, last, value, [less])
-exports.lower_bound = function (array, arg1, arg2, arg3, arg4) {
+function lower_bound(array, arg1, arg2, arg3, arg4) {
     let first;
     let last;
     let value;
