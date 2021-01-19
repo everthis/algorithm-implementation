@@ -146,7 +146,7 @@ function lower_bound(array, arg1, arg2, arg3, arg4) {
 
 </details>
 
-## upper_boundd
+## upper_bound
 
 <details>
   <summary>upper_bound implementation</summary>
