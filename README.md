@@ -37,6 +37,32 @@ const lengthOfLIS = function(nums) {
 
 // construct. LIS
 
+const LIS = X => {
+  const n = X.length
+  const P = Array(n), M = Array(n + 1)
+  let L = 0
+  for(let i = 0; i < n; i++) {
+     let lo = 1, hi = L
+     while(lo <= hi) {
+         let mid = Math.ceil((lo + hi) / 2)
+         if(X[M[mid]] < X[i]) lo = mid + 1
+         else hi = mid - 1
+     }
+     let newL = lo
+     P[i] = M[newL - 1]
+     M[newL] = i
+     if(newL > L) L = newL 
+
+  }
+  let S = Array(L)
+  let k = M[L]
+  for(let i = L - 1; i >= 0; i--) {
+      S[i] = X[k]
+      k = P[k]
+  }
+  return S
+}
+
 function constructLIS(arr) {
   const n = arr.length;
   const L = Array(n);
