@@ -35,6 +35,29 @@ const lengthOfLIS = function(nums) {
   return stack.length
 };
 
+// construct. LIS
+
+function constructLIS(arr) {
+  const n = arr.length;
+  const L = Array(n);
+  for (let i = 0; i < L.length; i++) L[i] = [];
+  L[0].push(arr[0]);
+
+  for (let i = 1; i < n; i++) {
+    for (let j = 0; j < i; j++) {
+      if (arr[i] > arr[j] && L[i].length < L[j].length + 1) {
+        L[i] = L[j].slice();
+      }
+    }
+    L[i].push(arr[i]);
+  }
+  let max = L[0];
+  for (let x of L) {
+    if (x.length > max.length) max = x;
+  }
+  return max;
+}
+
 ```
 
 </details>
