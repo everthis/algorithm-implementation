@@ -88,6 +88,22 @@ function constructLIS(arr) {
 
 </details>
 
+## Convert base
+
+<details>
+  <summary>Convert base implementation</summary>
+  
+```js
+
+function convertFromBaseToBase(str, fromBase, toBase){
+  const num = parseInt(str, fromBase);
+  return num.toString(toBase);
+}
+
+```
+
+</details>
+
 ## lower_bound
 
 <details>
@@ -2069,3 +2085,4 @@ class RedBlackTree extends BinarySearchTree {
 ```
 
 </details>
+
