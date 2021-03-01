@@ -111,6 +111,41 @@ function convertFromBaseToBase(str, fromBase, toBase){
 
 </details>
 
+
+## ceilIIndex, floorIndex
+
+<details>
+  <summary>floorIndex, ceilIndex implementation</summary>
+
+```js
+function ceilIndex(t, l, r, key) {
+  while (r - l > 1) {
+    let m = (l + (r - l) / 2) >> 0
+    if (t[m] >= key) {
+      r = m
+    } else {
+      l = m
+    }
+  }
+  return r
+}
+
+function floorIndex(t, l, r, key) {
+  while (r - l > 1) {
+    let m = (l + (r - l) / 2) >> 0
+    if (t[m] <= key) {
+      l = m
+    } else {
+      r = m
+    }
+  }
+  return l
+}
+
+```
+
+</details>
+
 ## lower_bound
 
 <details>
