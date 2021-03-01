@@ -800,6 +800,31 @@ The last iteration is lo == hi == mid
 When target > nums[mid] == nums[lo] == nums[hi], after loop lo = lo + 1 == high +1 which will be the correct index for insertion
 When target < nums[mid] == nums[lo] == nums[hi], after loop hi = hi - 1 == low - 1 is not the correct index, should be low
 
+
+Why does Binary search algorithm use floor and not ceiling - not in an half open range?
+
+This all depends on how you update your left and right variable.
+
+Normally, we use left = middle+1 and right = middle-1, with stopping criteria left = right.
+
+In this case, ceiling or flooring the middle value doesn't matter.
+
+However, if we use left = middle+1 and right = middle, we must take the floor of the middle value, otherwise we end up in an endless loop.
+
+Consider finding 11 in array 11, 22.
+
+We set left = 0 and right = 1, the middle is 0.5, if we take the ceiling, it would be 1.
+Since 22 is larger than query, we need to cut the right half and move right boarder towards middle.
+This works fine when the array is large, but since there are only two elements.
+right = middle will again set right to 1. We have an infinite loop.
+
+To sum up,
+
+both ceiling and flooring work fine with left = middle+1 and right = middle-1
+ceiling works fine with left = middle and right = middle-1
+flooring works fine with left = middle+1 and right = middle
+
+
 */
 
 ```
