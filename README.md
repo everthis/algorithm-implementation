@@ -13,27 +13,34 @@ Algorithm Implementation.
   <summary>LIS(Longest Increasing Subsequence) implementation</summary>
 
 ```js
-/**
- * @param {number[]} nums
- * @return {number}
- */
-const lengthOfLIS = function(nums) {
-  const stack = []
-  for(let e of nums) {
-    if(stack.length === 0 || e > stack[stack.length - 1]) {
-      stack.push(e)
-      continue
+const LIS = arr => {
+  const n = arr.length
+  // memo[j]: 长度为j的最长自增子序列最后一位的index（同长度最后一位最小）. 
+  // stores the index k of the smallest value X[k] such that there is an increasing subsequence of length j ending at X[k] on the range k ≤ i
+  // pre[k]: 以arr[k]结尾的LIS，arr[k]之前一个元素的index. 
+  // stores the index of the predecessor of X[k] in the longest increasing subsequence ending at X[k]  
+  const pre = Array(n), memo = Array(n + 1) 
+  let len = 0 // length
+  for(let i = 0; i < n; i++) {
+    let lo = 1, hi = len
+    while(lo <= hi) {
+      let mid = Math.ceil((lo + hi) / 2)
+      if(arr[memo[mid]] < arr[i]) lo = mid + 1
+      else hi = mid - 1
     }
-    let l = 0, r = stack.length - 1, mid
-    while(l < r) {
-      const mid = l + ((r - l) >> 1)
-      if(e > stack[mid]) l = mid + 1
-      else r = mid
-    }
-    stack[l] = e
+    const newL = lo
+    pre[i] = memo[newL - 1]
+    memo[newL] = i
+    if(newL > len) len = newL
   }
-  return stack.length
-};
+  const res = Array(len)
+  let k = memo[len]
+  for(let i = len - 1; i >= 0; i--) {
+    res[i] = arr[k]
+    k = pre[k]
+  }
+  return res
+}
 
 // construct. LIS
 
