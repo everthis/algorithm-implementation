@@ -232,6 +232,10 @@ function lower_bound(array, arg1, arg2, arg3, arg4) {
   <summary>upper_bound implementation</summary>
 
 ```js
+/**
+It returns the first element in the range [first, last) that
+is greater than value, or last if no such element is found.
+*/
 function upperBound(array, func) {
   let diff, len, i, current;
   len = array.length;
