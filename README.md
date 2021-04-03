@@ -174,6 +174,11 @@ function floorIndex(t, l, r, key) {
   <summary>lower_bound implementation</summary>
 
 ```js
+// the first element in the range [first, last) which has a value not less than val.
+// This means that the function returns the index of the next smallest number just
+// greater than or equal to that number. If there are multiple values that are equal to val,
+// lower_bound() returns the index of the first such value.
+
 // Like C++'s std::lower_bound.  Returns the first index at which
 // `value` could be inserted without changing the ordering.  Assumes
 // the array is sorted.
