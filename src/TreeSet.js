@@ -60,3 +60,55 @@ class TreeSet {
     return -(low + 1)
   }
 }
+
+// another
+// https://github.com/fukatani/TreeSet/blob/master/treeset.py
+function TreeSet(elements) {
+  let ts = []
+  let se = new Set()
+  let bisect = new Bisect()
+  if (elements) addAll(elements)
+  return { add, floor, ceiling, remove, contains, size, clear, toArray }
+  function addAll(elements) {
+    for (const e of elements) {
+      if (se.has(e)) continue
+      add(e)
+      se.add(e)
+    }
+  }
+  function add(e) {
+    if (!se.has(e)) {
+      bisect.insort_right(ts, e)
+      se.add(e)
+    }
+  }
+  function ceiling(e) {
+    let idx = bisect.bisect_right(ts, e)
+    if (ts[idx - 1] == e) return e
+    return ts[bisect.bisect_right(ts, e)]
+  }
+  function floor(e) {
+    let idx = bisect.bisect_left(ts, e)
+    if (ts[idx] == e) {
+      return e
+    } else {
+      return ts[bisect.bisect_left(ts, e) - 1]
+    }
+  }
+  function remove(e) {
+    ts = ts.filter((x) => x != e)
+    se.delete(e)
+  }
+  function contains(e) {
+    return se.has(e)
+  }
+  function size() {
+    return ts.length
+  }
+  function clear() {
+    ts = []
+  }
+  function toArray() {
+    return ts
+  }
+}
