@@ -2,7 +2,6 @@
 
 Algorithm Implementation.
 
-[![HitCount](http://hits.dwyl.com/everthis/algorithm-implementation.svg)](http://hits.dwyl.com/everthis/algorithm-implementation)
 [![codecov](https://codecov.io/gh/everthis/algorithm-implementation/branch/master/graph/badge.svg)](https://codecov.io/gh/everthis/algorithm-implementation)
 [![Build Status](https://travis-ci.com/everthis/algorithm-implementation.png?branch=master)](https://travis-ci.com/everthis/algorithm-implementation)
 
@@ -893,6 +892,28 @@ flooring works fine with left = middle+1 and right = middle
 
 */
 
+```
+  
+```js
+function binarySearch(arr, compareFn, target) {
+  let left = 0;  // inclusive
+  let right = arr.length;  // exclusive
+  let found;
+  while (left < right) {
+    const middle = left + ((right - left) >> 1);
+    const compareResult = compareFn(target, arr[middle]);
+    if (compareResult > 0) {
+      left = middle + 1;
+    } else {
+      right = middle;
+      // We are looking for the lowest index so we can't return immediately.
+      found = !compareResult;
+    }
+  }
+  // left is the index if found, or the insertion point otherwise.
+  // ~left is a shorthand for -left - 1.
+  return found ? left : ~left;
+};
 ```
 
 </details>
