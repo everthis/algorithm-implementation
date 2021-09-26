@@ -14,3 +14,15 @@ const BinarySearch = function(nums, target) {
   }
   return l
 };
+
+
+// find largest element that smaller than x
+// same as upper_bound in C++
+function binarySearch(arr, l, r, x) {
+  while (l < r) {
+    const mid = r - ((r - l) >> 1)
+    if (arr[mid] > x) r = mid - 1
+    else l = mid
+  }
+  return l
+}
