@@ -3,7 +3,6 @@
 Algorithm Implementation.
 
 [![codecov](https://codecov.io/gh/everthis/algorithm-implementation/branch/master/graph/badge.svg)](https://codecov.io/gh/everthis/algorithm-implementation)
-[![Build Status](https://travis-ci.com/everthis/algorithm-implementation.png?branch=master)](https://travis-ci.com/everthis/algorithm-implementation)
 
 
 ## LIS
