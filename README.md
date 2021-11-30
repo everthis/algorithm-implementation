@@ -5,6 +5,49 @@ Algorithm Implementation.
 [![codecov](https://codecov.io/gh/everthis/algorithm-implementation/branch/master/graph/badge.svg)](https://codecov.io/gh/everthis/algorithm-implementation)
 
 
+## Bisect
+
+<details>
+  <summary>Bisect</summary>
+
+```js
+//////////////////////////////////////////////Template/////////////////////////////////////////////////////////////
+function Bisect() {
+  return { insort_right, insort_left, bisect_left, bisect_right }
+  function insort_right(a, x, lo = 0, hi = null) {
+    lo = bisect_right(a, x, lo, hi)
+    a.splice(lo, 0, x)
+  }
+  function bisect_right(a, x, lo = 0, hi = null) {
+    // > upper_bound
+    if (lo < 0) throw new Error('lo must be non-negative')
+    if (hi == null) hi = a.length
+    while (lo < hi) {
+      let mid = parseInt((lo + hi) / 2)
+      x < a[mid] ? (hi = mid) : (lo = mid + 1)
+    }
+    return lo
+  }
+  function insort_left(a, x, lo = 0, hi = null) {
+    lo = bisect_left(a, x, lo, hi)
+    a.splice(lo, 0, x)
+  }
+  function bisect_left(a, x, lo = 0, hi = null) {
+    // >= lower_bound
+    if (lo < 0) throw new Error('lo must be non-negative')
+    if (hi == null) hi = a.length
+    while (lo < hi) {
+      let mid = parseInt((lo + hi) / 2)
+      a[mid] < x ? (lo = mid + 1) : (hi = mid)
+    }
+    return lo
+  }
+}
+
+```
+
+</details>
+
 ## LIS
 
 <details>
