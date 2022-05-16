@@ -2304,6 +2304,7 @@ class RedBlackTree extends BinarySearchTree {
 
 ```
 
+</details>
 
 
 ## TreeMap
