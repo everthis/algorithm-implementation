@@ -707,18 +707,14 @@ class PriorityQueue {
 function Quicksort(arr, start, end) {
   if (start >= end) return
   const p = partition(arr, start, end)
-  qs(arr, start, p)
-  qs(arr, p + 1, end)
+  Quicksort(arr, start, p)
+  Quicksort(arr, p + 1, end)
 }
 
 function swap(arr, i, j) {
   const tmp = arr[i]
   arr[i] = arr[j]
   arr[j] = tmp
-}
-
-function compare(a, b) {
-  return a - b
 }
 
 function partition(arr, start, end) {
