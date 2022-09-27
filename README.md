@@ -584,6 +584,23 @@ log(t.getSum(n, 1, 3))
   <summary>Union-Find implementation</summary>
   
 ```js
+class UF {
+  constructor(n) {
+    this.root = Array(n).map((_, i) => i)
+  }
+  find(x) {
+    if (this.root[x] !== x) {
+      this.root[x] = this.find(this.root[x])
+    }
+    return this.root[x]
+  }
+  union(x, y) {
+    const xr = this.find(x)
+    const yr = this.find(y)
+    this.root[yr] = xr
+  }
+}
+
 class UnionFind {
   constructor(n) {
     this.parents = Array(n)
