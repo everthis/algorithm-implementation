@@ -586,7 +586,7 @@ log(t.getSum(n, 1, 3))
 ```js
 class UF {
   constructor(n) {
-    this.root = Array(n).map((_, i) => i)
+    this.root = Array(n).fill(null).map((_, i) => i)
   }
   find(x) {
     if (this.root[x] !== x) {
