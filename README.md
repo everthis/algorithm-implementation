@@ -812,6 +812,29 @@ function select(array, k, compare) {
   <summary>Mergesort implementation</summary>
 
 ```js
+
+
+/**
+ * @param {number[]} arr
+ */
+function mergeSort(arr) {
+  // your code here
+  if(arr.length < 2) return
+  const mid = Math.floor(arr.length / 2)
+  const left = arr.slice(0, mid)
+  const right = arr.slice(mid)
+  mergeSort(left)
+  mergeSort(right)
+  let l = 0, r = 0
+  while(l < left.length || r < right.length) {
+    if(r === right.length || (l < left.length && left[l] <= right[r])) {
+      arr[l + r] = left[l++]
+    } else {
+      arr[l + r] = right[r++]
+    }
+  }
+}
+
 // Merges two subarrays of arr[].
 // First subarray is arr[l..m]
 // Second subarray is arr[m+1..r]
