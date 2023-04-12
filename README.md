@@ -721,39 +721,33 @@ class PriorityQueue {
   <summary>Quicksort implementation</summary>
   
 ```js
-function Quicksort(arr, start, end) {
-  if (start >= end) return
-  const p = partition(arr, start, end)
-  Quicksort(arr, start, p)
-  Quicksort(arr, p + 1, end)
+function quickSort(arr) {
+  // your code here
+  sort(arr, 0, arr.length - 1)
 }
 
-function swap(arr, i, j) {
-  const tmp = arr[i]
-  arr[i] = arr[j]
-  arr[j] = tmp
+function sort(arr, start, end) {
+  if(start >= end) return
+  const pivot = partition(arr, start, end)
+  sort(arr, start, pivot - 1)
+  sort(arr, pivot + 1, end)
 }
 
 function partition(arr, start, end) {
-  const pivot = arr[start]
-  let s = start
-  let e = end
-  while (true) {
-    while (arr[s] < pivot) {
-      s++
+  const mid = arr[start]
+  let l = start + 1, r = end
+  while(l <= r) {
+    if(arr[l] <= mid) l++
+    else {
+      swap(arr, l, r)
+      r--
     }
-    while (pivot < arr[e]) {
-      e--
-    }
-    if (s === e) {
-      return s
-    } else if (s > e) {
-      return s - 1
-    }
-    swap(arr, s, e)
-    s++
-    e--
   }
+  swap(arr, start, r)
+  return r
+}
+function swap(arr, i, j) {
+  ;[arr[i], arr[j]] = [arr[j], arr[i]]
 }
 
 ```
