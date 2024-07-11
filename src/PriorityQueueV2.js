@@ -51,6 +51,18 @@ class PQ {
     return this.pq[0];
   }
 
+  remove(val) {
+    const pq = this.pq
+    const idx = pq.indexOf(val);
+    if (idx > -1) {
+        this.swap(idx, this.size - 1)
+        pq.pop();
+        if (idx < pq.length) {
+            this.heapifyDown(idx);
+        }
+    }
+  }
+
   pull() {
     const val = this.pq[0];
     this.swap(0, this.size - 1);
