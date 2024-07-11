@@ -1,8 +1,3 @@
-/**
- * @param {number[][]} buildings
- * @return {number[][]}
- */
-
 class PQ {
   constructor(comparator) {
     this.pq = [];
@@ -58,7 +53,7 @@ class PQ {
         this.swap(idx, this.size - 1)
         pq.pop();
         if (idx < pq.length) {
-            this.heapifyDown(idx);
+            this.siftDown(idx);
         }
     }
   }
