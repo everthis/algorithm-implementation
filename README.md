@@ -601,6 +601,38 @@ class UF {
   }
 }
 
+// another
+
+class UF {
+  constructor() {
+    this.root = {}
+  }
+  find(x) {
+    if (this.root[x] !== x) {
+      this.root[x] = this.find(this.root[x])
+    }
+    return this.root[x]
+  }
+  union(x, y) {
+    if(this.root[x] == null) this.root[x] = x
+    if(this.root[y] == null) this.root[y] = y
+    const xr = this.find(x)
+    const yr = this.find(y)
+    this.root[yr] = xr
+  }
+  getGroups() {
+    const g = {}
+    for(const [u, _] of Object.entries(this.root)) {
+        const r = this.find(u)
+        if(g[r] == null)  g[r] = []
+        g[r].push(u)
+    }
+    return g
+  }
+} 
+
+// another
+
 class UnionFind {
   constructor(n) {
     this.parents = Array(n)
